@@ -1,11 +1,10 @@
 from typing import List, Dict
 
-
 import xlrd
-from aiohttp.web_request import Request
 from celery import chain, Celery
 from django.contrib import messages
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from requests import Request
 from xlrd import Book
 
 import settings
@@ -128,6 +127,14 @@ class AsyncFileService:
             f'User {self.initiator_email} uploaded file. File did not pass validation, validation errors: \n'
             f'{[f"{error.description}" for error in self.file_validation_error_messages ]}'
         )
+
+        for receiver in self._email_receivers:
+            send_email_with_gmail(
+                recipient_emails=receiver,
+                subject="File upload result",
+                body=report_file_attach_content,
+                file=self.file
+            )
 
     def __show_error_message(self) -> None:
         messages.warning(
