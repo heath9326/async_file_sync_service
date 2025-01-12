@@ -1,18 +1,9 @@
 from dataclasses import dataclass
-import re
-from abc import ABC, abstractmethod
-from typing import Iterable
 
 import xlrd
-from django import forms
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from rest_framework.exceptions import ValidationError
 from xlrd import Book
 from xlrd.sheet import Sheet
-
-from infrastructure.utils import DateTime
-from integrations.services import DBInfoService
-from rates.models import Plan
 
 
 @dataclass
