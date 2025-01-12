@@ -1,0 +1,2 @@
+DEFAULT_USER_EMAIL = "email@gmail.com"
+DEFAULT_USER_PASSWORD = "<PASSWORD>"
